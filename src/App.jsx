@@ -1,25 +1,23 @@
 import React from "react";
 import { BrowserRouter, Link } from "react-router-dom";
 import { addTodo, removeTodo, toggleTodo } from "./actions";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
-const App = () => {
-  const dispatch = useDispatch();
-  const currentState = useSelector(state => state);
+const App = props => {
   let todosList = [];
-  console.log(currentState.taskData.todos);
+  console.log(props.currentState.taskData.todos);
 
-  for (let x in currentState.taskData.todos) {
+  for (let x in props.currentState.taskData.todos) {
     console.log("this is x in the for x in todos loop:", x);
-    console.log(currentState.taskData.todos[x]);
+    console.log(props.currentState.taskData.todos[x]);
     todosList.push(
       <div key={x}>
-        <h1> {currentState.taskData.todos[x].task}</h1>
+        <h1> {props.currentState.taskData.todos[x].task}</h1>
         <h3>
-          Completed? {currentState.taskData.todos[x].completed.toString()}
+          Completed? {props.currentState.taskData.todos[x].completed.toString()}
         </h3>
-        <button onClick={() => dispatch(toggleTodo(x))}>toggleTodo</button>
-        <button onClick={() => dispatch(removeTodo(x))}>Delete</button>
+        <button onClick={() => props.toggleTodo(x)}>toggleTodo</button>
+        <button onClick={() => props.removeTodo(x)}>Delete</button>
       </div>
     );
     console.log("todosList", todosList);
@@ -32,7 +30,7 @@ const App = () => {
         <form
           onSubmit={() => {
             event.preventDefault();
-            dispatch(addTodo(event.target.task.value));
+            props.addTodo(event.target.task.value);
             event.target.task.value = "";
           }}
         >
@@ -46,4 +44,11 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+  return { currentState: state };
+};
+
+export default connect(
+  mapStateToProps,
+  { addTodo, removeTodo, toggleTodo }
+)(App);

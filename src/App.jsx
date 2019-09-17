@@ -13,8 +13,8 @@ const App = () => {
     console.log("this is x in the for x in todos loop:", x);
     console.log(currentState.taskData.todos[x]);
     todosList.push(
-      <div key={x} id={x}>
-        <h1 id={x}>{currentState.taskData.todos[x].task}</h1>
+      <div key={x}>
+        <h1> {currentState.taskData.todos[x].task}</h1>
         <h3>
           Completed? {currentState.taskData.todos[x].completed.toString()}
         </h3>
@@ -29,6 +29,17 @@ const App = () => {
     <BrowserRouter>
       <div className="container">
         <h1>THIS WORKS</h1>
+        <form
+          onSubmit={() => {
+            event.preventDefault();
+            dispatch(addTodo(event.target.task.value));
+            event.target.task.value = "";
+          }}
+        >
+          <label>Task: </label>
+          <input name="task" />
+          <button type="submit"> Submit!!! </button>
+        </form>
         {todosList}
       </div>
     </BrowserRouter>

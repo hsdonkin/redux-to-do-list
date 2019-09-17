@@ -20,6 +20,7 @@ function task(state = initialState, action) {
       newState.todos[v4()] = todo;
       return newState;
     case "REMOVE_TODO":
+      console.log("deleting ", action.payload);
       newState = Object.assign({}, state);
       delete newState.todos[action.payload];
       return newState;

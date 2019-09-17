@@ -14,17 +14,19 @@ import { Provider } from "react-redux";
 import rootReducer from "./reducers";
 import { createStore } from "redux";
 import { addTodo, removeTodo, toggleTodo } from "./actions";
-
 import App from "./App";
-
 import "./style.scss";
 
 const root = document.getElementById("root");
-const store = createStore(rootReducer);
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 store.subscribe(() => console.log(store.getState()));
 store.dispatch(addTodo("Walk the dog"));
 store.dispatch(addTodo("Make an interface "));
+store.dispatch(addTodo("Write better code"));
 
 const render = Component => {
   ReactDOM.render(

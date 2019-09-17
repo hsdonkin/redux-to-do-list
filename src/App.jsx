@@ -8,19 +8,18 @@ const App = () => {
   const currentState = useSelector(state => state);
   let todosList = [];
   console.log(currentState.taskData.todos);
-  for (var x in currentState.taskData.todos) {
+
+  for (let x in currentState.taskData.todos) {
     console.log("this is x in the for x in todos loop:", x);
     console.log(currentState.taskData.todos[x]);
     todosList.push(
       <div key={x} id={x}>
         <h1 id={x}>{currentState.taskData.todos[x].task}</h1>
-        <button
-          onClick={() => {
-            dispatch(removeTodo(x));
-          }}
-        >
-          Delete {x}
-        </button>
+        <h3>
+          Completed? {currentState.taskData.todos[x].completed.toString()}
+        </h3>
+        <button onClick={() => dispatch(toggleTodo(x))}>toggleTodo</button>
+        <button onClick={() => dispatch(removeTodo(x))}>Delete</button>
       </div>
     );
     console.log("todosList", todosList);
@@ -28,10 +27,10 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <main className="container">
+      <div className="container">
         <h1>THIS WORKS</h1>
         {todosList}
-      </main>
+      </div>
     </BrowserRouter>
   );
 };

@@ -23,6 +23,7 @@ function task(state = initialState, action) {
       console.log("deleting ", action.payload);
       newState = Object.assign({}, state);
       delete newState.todos[action.payload];
+
       return newState;
     case "TOGGLE_TODO":
       newState = Object.assign({}, state);
